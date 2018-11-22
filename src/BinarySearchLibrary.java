@@ -36,8 +36,56 @@ public class BinarySearchLibrary {
 		int high = list.size()-1;
 		// (low,high] contains target
 		// TODO: complete method
+		return doFirstBS(low+1, high, list, target, comp);
+	}
+	
+	
+	public static <T> int doFirstBS(int a, int b, List<T> list, 
+           	T target, Comparator<T> comp) {
+			
+		if(comp.compare(target, list.get(a)) == 0)
+			return a;
 		
-		return -1;
+		if(a==b)
+			return -1;
+		
+		int m = a + (b-a)/2;
+		
+		if(comp.compare(target, list.get(m)) == 0)
+			if(comp.compare(target, list.get(m-1)) == 0)
+				return doFirstBS(a, m-1, list, target, comp);
+			else
+				return m;
+		else
+		 if(comp.compare(target, list.get(m)) < 0)
+			return doFirstBS(a, m-1, list, target, comp);
+		 else
+		  return doFirstBS(m+1, b, list, target, comp);
+	}
+	
+	
+	public static <T> int doLastBS(int a, int b, List<T> list, 
+           	T target, Comparator<T> comp) {
+			
+		if(comp.compare(target, list.get(b)) == 0)
+			return b;
+		
+		if(a==b)
+			return -1;
+		
+		int m = b - (b-a)/2;
+		
+		if(comp.compare(target, list.get(m)) == 0)
+			if(comp.compare(target, list.get(m+1)) == 0)
+				return doLastBS(m+1, b, list, target, comp);
+			else
+				return m;
+		else
+		 if(comp.compare(target, list.get(m)) > 0)
+			 return doLastBS(m+1, b, list, target, comp);
+		 else
+			return doLastBS(a, m-1, list, target, comp);
+
 	}
 
 	/**
@@ -61,7 +109,12 @@ public class BinarySearchLibrary {
 		
 		// target in [low,high)
 		// TODO: complete method
-		return -1;
+		
+		// (low,high] contains target
+		// TODO: complete method
+		return doLastBS(low, high-1, list, target, comp);
+		
 	}
 	
 }
+

@@ -28,6 +28,11 @@ public class Term implements Comparable<Term> {
 	 */
 	public Term(String word, double weight) {
 		// TODO: Complete Term constructor
+		if(weight < 0)
+			throw new IllegalArgumentException("negative weight "+weight);
+		
+		if(word == null) //|| word.isEmpty())
+			throw new NullPointerException("name is null or empty");
 		
 		myWord = word;
 		myWeight = weight;
@@ -87,7 +92,44 @@ public class Term implements Comparable<Term> {
 		public int compare(Term v, Term w) {
 			// TODO: Implement compare
 			
-			return 0;
+            int value = 0;
+            if (v == null && w == null) {
+                value = 0;
+            } else if (v == null) {
+                value = -1;
+            } else if (w == null) {
+                value = 1;
+            }
+            if (value == 0) {
+                               
+                int len1 = v.getWord().length();
+                int len2 = w.getWord().length();
+                //int lim = Math.min(Math.min(len1, len2), myPrefixSize);
+                
+                int lim = 0;
+                if(len1<len2)
+                	lim = len1;
+                else
+                	lim = len2;
+                
+                if(lim>myPrefixSize)
+                	lim = myPrefixSize;
+                char v1[] = v.getWord().toCharArray();
+                char v2[] = w.getWord().toCharArray();
+
+                int i = 0;
+                while (i < lim) {
+                    char c1 = v1[i];
+                    char c2 = v2[i];
+                    if (c1 != c2) {
+                        return c1 - c2;
+                    }
+                    i++;
+                }
+                return len1 - len2;
+            }
+            return value;
+
 		}
 	
 	}
@@ -102,7 +144,26 @@ public class Term implements Comparable<Term> {
 		public int compare(Term v, Term w) {
 			// TODO: implement compare
 			
-			return 0;
+            int value = 0;
+            if (v == null && w == null) {
+                value = 0;
+            } else if (v == null) {
+                value = 1;
+            } else if (w == null) {
+                value = -1;
+            }
+            if (value == 0) {
+
+            	if(v.getWeight() < w.getWeight())
+            		value = 1;
+            	if(v.getWeight() == w.getWeight())
+            		value = 0;
+            	if(v.getWeight() > w.getWeight())
+            		value = -1;
+            	
+            }
+            return value;
+			
 		}
 	}
 
@@ -115,8 +176,25 @@ public class Term implements Comparable<Term> {
 	public static class WeightOrder implements Comparator<Term> {
 		public int compare(Term v, Term w) {
 			// TODO: implement compare
-			
-			return 0;
+            int value = 0;
+            if (v == null && w == null) {
+                value = 0;
+            } else if (v == null) {
+                value = -1;
+            } else if (w == null) {
+                value = 1;
+            }
+            if (value == 0) {
+                
+            	if(v.getWeight() < w.getWeight())
+            		value = -1;
+            	if(v.getWeight() == w.getWeight())
+            		value = 0;
+            	if(v.getWeight() > w.getWeight())
+            		value = 1;
+            }
+            
+            return value;
 		}
 	}
 }

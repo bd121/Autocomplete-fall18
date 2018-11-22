@@ -106,7 +106,30 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	@Override
 	public List<Term> topMatches(String prefix, int k) {
 
-		ArrayList<Term> list = new ArrayList<>();
-		return list;
+		if(prefix == null )
+			throw new NullPointerException("prefix is null");
+		
+		if (k < 0) {
+			throw new IllegalArgumentException("Illegal value of k:"+k);
+		}
+		
+		// maintain pq of size k
+		PriorityQueue<Term> pq = new PriorityQueue<Term>(10, new Term.WeightOrder());
+		for (Term t : myTerms) {
+			if (!t.getWord().startsWith(prefix))
+				continue;
+			if (pq.size() < k) {
+				pq.add(t);
+			} else if (pq.peek().getWeight() < t.getWeight()) {
+				pq.remove();
+				pq.add(t);
+			}
+		}
+		int numResults = Math.min(k, pq.size());
+		LinkedList<Term> ret = new LinkedList<>();
+		for (int i = 0; i < numResults; i++) {
+			ret.addFirst(pq.remove());
+		}
+		return ret;
 	}
 }
