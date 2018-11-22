@@ -38,7 +38,7 @@ public class BinarySearchLibrary {
 		return bSearchFirst(list, target, comp);
 	}
 	
-	public static <T> int bSearchFirst(List<T> list, 
+	private static <T> int bSearchFirst(List<T> list, 
            	T target, Comparator<T> comp) {
 		
 		int low = 0;
@@ -63,7 +63,7 @@ public class BinarySearchLibrary {
 		return -1;
 	}
 
-	public static <T> int bSearchLast(List<T> list, 
+	private static <T> int bSearchLast(List<T> list, 
            	T target, Comparator<T> comp) {
 		
 		int low = 0;
