@@ -126,7 +126,7 @@ public class Term implements Comparable<Term> {
                     }
                     i++;
                 }
-                return len1 - len2;
+                //return len1 - len2;
             }
             return value;
 
