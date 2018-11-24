@@ -91,14 +91,14 @@ public class Term implements Comparable<Term> {
 		 */
 		public int compare(Term v, Term w) {
 			// TODO: Implement compare
-			
+			if (myPrefixSize==0) return 0;
             int value = 0;
             if (v == null && w == null) {
-                value = 0;
+                return 0;
             } else if (v == null) {
-                value = -1;
+                return -1;
             } else if (w == null) {
-                value = 1;
+                return 1;
             }
             if (value == 0) {
                                
