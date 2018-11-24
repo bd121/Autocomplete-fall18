@@ -31,7 +31,7 @@ public class Term implements Comparable<Term> {
 		if(weight < 0)
 			throw new IllegalArgumentException("negative weight "+weight);
 		
-		if(word == null) //|| word.isEmpty())
+		if(word == null)
 			throw new NullPointerException("name is null or empty");
 		
 		myWord = word;
@@ -104,16 +104,28 @@ public class Term implements Comparable<Term> {
                                
                 int len1 = v.getWord().length();
                 int len2 = w.getWord().length();
-                //int lim = Math.min(Math.min(len1, len2), myPrefixSize);
-                
                 int lim = 0;
-                if(len1<len2)
-                	lim = len1;
-                else
-                	lim = len2;
                 
-                if(lim>myPrefixSize)
+                
+                if(len1 > myPrefixSize && len2 > myPrefixSize)
                 	lim = myPrefixSize;
+                else
+                	lim = Math.min(len1, len2);
+                	
+                /*
+                if(len1 <myPrefixSize && len2 < myPrefixSize) {
+            		
+            		if(len1 > len2)
+              		  return len1 - len2;
+            		
+                	}
+                	else
+                	  if(len1 > len2)
+                		  return len1 - len2;
+                	  else
+                        lim = len1;
+                        */
+
                 char v1[] = v.getWord().toCharArray();
                 char v2[] = w.getWord().toCharArray();
 
@@ -126,7 +138,9 @@ public class Term implements Comparable<Term> {
                     }
                     i++;
                 }
-                //return len1 - len2;
+
+                if(value == 0 && ((len1 > len2) && lim != myPrefixSize))
+                		return len1 - len2;
             }
             return value;
 
