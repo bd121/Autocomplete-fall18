@@ -147,8 +147,10 @@ public class Term implements Comparable<Term> {
                     i++;
                 }
 
-                if(value == 0 && (len1 != len2) && lim != myPrefixSize)
-                		return len1 - len2;
+                if(value == 0 && lim != myPrefixSize) {
+                	if (len1 > len2) return 1;
+                	if (len1 < len2) return -1;
+                }
             }
             return value;
 
