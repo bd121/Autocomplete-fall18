@@ -106,6 +106,14 @@ public class Term implements Comparable<Term> {
                 int len2 = w.getWord().length();
                 int lim = 0;
                 
+                if(len1 == 0 && len2 == 0)
+                    return 0;
+                else
+                	 if(len1 == 0)
+                		 return -1;
+                	 else
+                	 if (len2 == 0)
+                		 return 1;
                 
                 if(len1 > myPrefixSize && len2 > myPrefixSize)
                 	lim = myPrefixSize;
