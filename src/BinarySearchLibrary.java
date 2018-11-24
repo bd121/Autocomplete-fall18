@@ -38,9 +38,9 @@ public class BinarySearchLibrary {
 		
 		
 		// TODO: complete method
-		return doFirstBS(low, high, list, target, comp);
+		//return doFirstBS(low, high, list, target, comp);
 		
-		//return bSearchFirstIndex(list, target, comp);
+		return bSearchFirstIndex(list, target, comp);
 	}
 	
 
@@ -119,9 +119,9 @@ public class BinarySearchLibrary {
 		
 		// target in [low,high)
 		// TODO: complete method
-		//return bSearchLastIndex(list, target, comp);
+		return bSearchLastIndex(list, target, comp);
 		
-		return doLastBS(low, high-1, list, target, comp);
+		//return doLastBS(low, high-1, list, target, comp);
 	
 	}
 	
