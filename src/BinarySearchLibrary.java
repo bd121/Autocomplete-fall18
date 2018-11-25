@@ -125,50 +125,59 @@ public class BinarySearchLibrary {
 
         int mid;
 		
-		while(low < high)
+		while(low + 1 != high)
 		{
+			
        
 			mid = (high + low)/2;
 	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
 			
 			int c = comp.compare(list.get(mid), target); 
 			
-			if(c > 0) {
-				high = mid;
+			if(c < 0) {
+				low = mid;
 			}
 			else {
 
-					low = mid;
+				high = mid;
 					
-					if(c == 0)
-					{
-						if(mid == high || mid == 0 || (mid-high) == 0 || mid == list.size()-1)
-							  return mid;
-					
-					}
-					
-				}
-			
+					//if(c == 0)
+					//{
+					//	if(mid == high || mid == 0 || (mid-high) == 0 || mid == list.size()-1)
+					//		  return mid;
+					//
+					//}		
+			}
+		}	
 			 //System.out.println(" new low: " + low + " new high: " + high);
 			
-            if(high < list.size() && high - low == 1) {
+		int c = comp.compare(list.get(high), target);
+		if (c==0) {
+			return high;
+		} else {
+			return -1;
+		}
+			
+				
+		
+            //if(high < list.size() && high - low == 1) {
 	        	
-	        	if(comp.compare(target, list.get(high) ) == 0)
-	        		return high;
-	        	else
-	        	if(comp.compare(target, list.get(low) ) == 0)
-	        		return low;
-	        	else
-	        	 return -1;
-	        }
-	        else
-	        	if ((high - low) == 1)
-	        		return -1;
+	       // 	if(comp.compare(target, list.get(high) ) == 0)
+	       // 		return high;
+	       // 	else
+	       // 	if(comp.compare(target, list.get(low) ) == 0)
+	       // 		return low;
+	       // 	else
+	       // 	 return -1;
+	        //}
+	        //else
+	        //	if ((high - low) == 1)
+	       // 		return -1;
 	        	
 						
-		}
+		//}
 		
-		return -1;
+		//return -1;
 	
 	}
 	
