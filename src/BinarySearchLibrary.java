@@ -57,23 +57,26 @@ public class BinarySearchLibrary {
 		{
        
 			mid = (high + low)/2;
-	        //System.out.println("low: " + low + " high: " + high + " mid: " + mid);
+	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
 			
-
-			if(comp.compare(list.get(mid), target) < 0) {
+	        int c = comp.compare(list.get(mid), target);
+	        
+			if( c < 0) {
 				low = mid;
 			}
 			else {
 
 					high = mid;
 					
-					if(comp.compare(target, list.get(mid) ) == 0)
+					if(c == 0)
 					{
 						if(mid == low || mid == 0 || (mid-low) == 0 || (high-low)==1)
 							  return mid;
 					
 					}
 				}
+			
+			//System.out.println(" new low: " + low + " new high: " + high);
 			
 	        if(low >= 0 && high - low == 1) {
 	        	if(comp.compare(target, list.get(low) ) == 0)
@@ -128,20 +131,22 @@ public class BinarySearchLibrary {
 			mid = (high + low)/2;
 	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
 			
-
-			if(comp.compare(list.get(mid), target) > 0) {
+			int c = comp.compare(list.get(mid), target); 
+			
+			if(c > 0) {
 				high = mid;
 			}
 			else {
 
 					low = mid;
 					
-					if(comp.compare(target, list.get(mid) ) == 0)
+					if(c == 0)
 					{
 						if(mid == high || mid == 0 || (mid-high) == 0 || mid == list.size()-1)
 							  return mid;
 					
 					}
+					
 				}
 			
 			 //System.out.println(" new low: " + low + " new high: " + high);
@@ -171,3 +176,4 @@ public class BinarySearchLibrary {
 	
 	
 }
+
