@@ -113,25 +113,39 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		if (k < 0) {
 			throw new IllegalArgumentException("Illegal value of k:"+k);
 		}
+		//f is the index of First element that match prefix
+		int f = firstIndexOf(myTerms, new Term(prefix, 0), new Term.PrefixOrder(prefix.length()));
+		
+		//l is the index of Last element that match prefix
+		int l = lastIndexOf(myTerms, new Term(prefix, 0), new Term.PrefixOrder(prefix.length()));
+		
+		ArrayList<Term> myList = new ArrayList<Term>();
+		
+		if(f == 0 && l == myTerms.length - 1)
+			myList.addAll(Arrays.asList(myTerms));
+		else
+		if(f >=0 && l >=0) {
 			
-		Arrays.sort(myTerms, new Term.ReverseWeightOrder());
+			for(int i = f; i <= l; i++)
+					myList.add(myTerms[i]);
+		}
+		
+		Collections.sort(myList, new Term.ReverseWeightOrder());
+		
+		if(k >= myList.size()) {
 			
-		ArrayList<Term> list = new ArrayList<>();
+			return myList;
+		}
+		else {
+			
+			ArrayList<Term> ret = new ArrayList<>();
+			
+			for(int i = 0; i < k; i++)
+				ret.add(myList.get(i));
+			
+			return ret;
+		}
 		
-		for(Term t : myTerms) {
-		
-			if (t.getWord().startsWith(prefix)) {
-		
-				if (list.size() < k) {
-					list.add(t);
-					if(list.size()==k)
-						break;	
-				}
-			}
-		
-		
-	   }
-		return list;
 	}
 
 	/*
