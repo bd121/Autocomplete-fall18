@@ -2,7 +2,7 @@ import java.util.*;
 
 public class BinarySearchLibrary {
 	
-	private static <T>
+	public static <T>
 	    int firstIndexSlow(List<T> list, 
 	    		           T target, Comparator<T> comp) {
 		int index = Collections.binarySearch(list, target,comp);
