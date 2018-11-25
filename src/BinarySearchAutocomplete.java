@@ -104,6 +104,38 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	 *             NullPointerException if prefix is null
 	 */
 	@Override
+	
+	public List<Term> topMatches(String prefix, int k) {
+
+		if(prefix == null )
+			throw new NullPointerException("prefix is null");
+		
+		if (k < 0) {
+			throw new IllegalArgumentException("Illegal value of k:"+k);
+		}
+		
+		Arrays.sort(myTerms, new Term.ReverseWeightOrder());
+		
+		ArrayList<Term> list = new ArrayList<>();
+		
+		for(Term t : myTerms) {
+		
+			if (t.getWord().startsWith(prefix)) {
+		
+				if (list.size() < k) {
+					list.add(t);
+					if(list.size()==k)
+						break;	
+				}
+			}
+		
+		
+	   }
+		return list;
+	}
+	
+	/*
+
 	public List<Term> topMatches(String prefix, int k) {
 
 		if(prefix == null )
@@ -132,4 +164,5 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		}
 		return ret;
 	}
+*/
 }

@@ -15,6 +15,20 @@ public class BinarySearchLibrary {
 		return index+1;
 	}
 	
+	public static <T>
+    int lastIndexSlow(List<T> list, 
+    		           T target, Comparator<T> comp) {
+		
+	int index = Collections.binarySearch(list, target,comp);
+	
+	if (index < 0) return index;
+	
+	while (index < list.size() && comp.compare(list.get(index),target) == 0) {
+		index += 1;
+	}
+	return index-1;
+}
+
 	/**
 	 * Uses binary search to find the index of the first object in parameter
 	 * list -- the first object o such that comp.compare(o,target) == 0.
@@ -32,72 +46,56 @@ public class BinarySearchLibrary {
     	int firstIndex(List<T> list, 
 	               	T target, Comparator<T> comp) {
 		
-		int low = 0;
+		int low = -1;
 		int high = list.size()-1;
-		// (low,high] contains target
-		
-		
+		// (low,high] contains target				
 		// TODO: complete method
-		//return doFirstBS(low, high, list, target, comp);
 		
-		return bSearchFirstIndex(list, target, comp);
-	}
-	
-
-	
-	public static <T> int bSearchFirstIndex(List<T> list, 
-           	T target, Comparator<T> comp) {
-		
-		int low = 0;
-		int high = list.size()-1;
         int mid;
 		
-		while(low <= high)
+		while(low < high)
 		{
-			mid = (low + high)/2;
-			if(comp.compare(target, list.get(mid) )< 0)
-					high = mid - 1;
-			else
-				if(comp.compare(target, list.get(mid) ) > 0)
-					low = mid + 1;
-				else {
-					while(mid > 0 && comp.compare(target, list.get(mid-1)) == 0)
-						mid--;
-					return mid;
-					
-				}
-		}
-		return -1;
-	}
+       
+			mid = (high + low)/2;
+	        //System.out.println("low: " + low + " high: " + high + " mid: " + mid);
+			
 
-	public static <T> int bSearchLastIndex(List<T> list, 
-           	T target, Comparator<T> comp) {
-		
-		int low = 0;
-		int high = list.size()-1;
-        int mid;
-		
-		while(low <= high)
-		{
-			mid = (low + high)/2;
-			if(comp.compare(target, list.get(mid) )< 0)
-					high = mid - 1;
-			else
-				if(comp.compare(target, list.get(mid) ) > 0)
-					low = mid + 1;
-				else {
-					while(mid < high && comp.compare(target, list.get(mid+1)) == 0)
-						mid++;
-					return mid;
+			if(comp.compare(list.get(mid), target) < 0) {
+				low = mid;
+			}
+			else {
+
+					high = mid;
 					
+					if(comp.compare(target, list.get(mid) ) == 0)
+					{
+						if(mid == low || mid == 0 || (mid-low) == 0 || (high-low)==1)
+							  return mid;
+					
+					}
 				}
+			
+	        if(low >= 0 && high - low == 1) {
+	        	if(comp.compare(target, list.get(low) ) == 0)
+	        		return low;
+	        	else
+	        	if(comp.compare(target, list.get(high) ) == 0)
+	        		return high;
+	        	else
+	        	 return -1;
+	        }
+	        else
+	        	if ((high - low) == 1)
+	        		return -1;
+	        	
+						
 		}
+		
 		return -1;
+		
 	}
-	
 	
 
-	
 	/**
 	 * Uses binary search to find the index of the last object in parameter
 	 * list -- the first object o such that comp.compare(o,target) == 0.
@@ -119,68 +117,56 @@ public class BinarySearchLibrary {
 		
 		// target in [low,high)
 		// TODO: complete method
-		return bSearchLastIndex(list, target, comp);
 		
-		//return doLastBS(low, high-1, list, target, comp);
-	
-	}
-	
-	
-	public static <T> int doFirstBS(int a, int b, List<T> list, 
-           	T target, Comparator<T> comp) {
-		
-		if(comp.compare(target, list.get(a)) == 0)
-			return a;
-		
-		if(a==b)
-			return -1;
-		
-		int m = (a+ b)/2;
-		
-		if(comp.compare(target, list.get(m)) == 0) {
-			
-			  while(m > a && comp.compare(target, list.get(m-1)) == 0)
-				  m--;
-				return m;
-		}
-		else 
-			if(m-1 > a && comp.compare(target, list.get(m)) < 0) {
-				return doFirstBS(a, m-1, list, target, comp);
-			}
-			else 
-				if(m < b)
-				  return doFirstBS(m+1, b, list, target, comp);
-				
-		return -1;
-	}
-	
-	
-	public static <T> int doLastBS(int a, int b, List<T> list, 
-           	T target, Comparator<T> comp) {
-			
-		if(comp.compare(target, list.get(b)) == 0)
-			return b;
-		
-		if(a==b)
-			return -1;
-		
-		int m = (a + b)/2;
-		
-		if(comp.compare(target, list.get(m)) == 0) {
-			while ((m <= b) && comp.compare(target, list.get(m+1)) == 0)
-				m++;
-				return m;
-		}
-		else
-		 if( comp.compare(target, list.get(m)) > 0)
-			 return doLastBS(m+1, b, list, target, comp);
-		 else
-			 //if( m-1 > a && comp.compare(target, list.get(m)) < 0)
-			if( m-1 > a)
-				return doLastBS(a, m-1, list, target, comp);
+		//return LastIndexBSearch(list, target, comp);
 
+        int mid;
+		
+		while(low < high)
+		{
+       
+			mid = (high + low)/2;
+	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
+			
+
+			if(comp.compare(list.get(mid), target) > 0) {
+				high = mid;
+			}
+			else {
+
+					low = mid;
+					
+					if(comp.compare(target, list.get(mid) ) == 0)
+					{
+						if(mid == high || mid == 0 || (mid-high) == 0 || mid == list.size()-1)
+							  return mid;
+					
+					}
+				}
+			
+			 //System.out.println(" new low: " + low + " new high: " + high);
+			
+            if(high < list.size() && high - low == 1) {
+	        	
+	        	if(comp.compare(target, list.get(high) ) == 0)
+	        		return high;
+	        	else
+	        	if(comp.compare(target, list.get(low) ) == 0)
+	        		return low;
+	        	else
+	        	 return -1;
+	        }
+	        else
+	        	if ((high - low) == 1)
+	        		return -1;
+	        	
+						
+		}
+		
 		return -1;
+	
 	}
+	
 	
 	
 	
