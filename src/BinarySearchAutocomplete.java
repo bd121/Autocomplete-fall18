@@ -113,9 +113,9 @@ public class BinarySearchAutocomplete implements Autocompletor {
 		if (k < 0) {
 			throw new IllegalArgumentException("Illegal value of k:"+k);
 		}
-		
+			
 		Arrays.sort(myTerms, new Term.ReverseWeightOrder());
-		
+			
 		ArrayList<Term> list = new ArrayList<>();
 		
 		for(Term t : myTerms) {
@@ -133,7 +133,7 @@ public class BinarySearchAutocomplete implements Autocompletor {
 	   }
 		return list;
 	}
-	
+
 	/*
 
 	public List<Term> topMatches(String prefix, int k) {
