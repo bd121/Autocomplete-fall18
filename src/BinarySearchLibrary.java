@@ -15,19 +15,17 @@ public class BinarySearchLibrary {
 		return index+1;
 	}
 	
-	private static <T>
-    int lastIndexSlow(List<T> list, 
-    		           T target, Comparator<T> comp) {
+	private static <T> int lastIndexSlow(List<T> list, T target, Comparator<T> comp) {
 		
-	int index = Collections.binarySearch(list, target,comp);
+		int index = Collections.binarySearch(list, target,comp);
 	
-	if (index < 0) return index;
+		if (index < 0) return index;
 	
-	while (index < list.size() && comp.compare(list.get(index),target) == 0) {
-		index += 1;
+		while (index < list.size() && comp.compare(list.get(index),target) == 0) {
+			index += 1;
+		}
+		return index-1;
 	}
-	return index-1;
-}
 
 	/**
 	 * Uses binary search to find the index of the first object in parameter
@@ -57,8 +55,7 @@ public class BinarySearchLibrary {
 		{
        
 			mid = (high + low)/2;
-	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
-			
+	       
 	        int cmp = comp.compare(list.get(mid), target);
 	        
 			if( cmp < 0) {
@@ -72,12 +69,10 @@ public class BinarySearchLibrary {
 					{
 						if(mid == low || mid == 0 || (mid-low) == 0 || (high-low)==1)
 							  return mid;
-					
 					}
 					
 				}
 
-			//System.out.println(" new low: " + low + " new high: " + high);
 			if((high - low == 1) && comp.compare(list.get(high), target) == 0)
 				return high;
 			else
@@ -114,8 +109,6 @@ public class BinarySearchLibrary {
 		
 		// target in [low,high)
 		// TODO: complete method
-		
-		//return LastIndexBSearch(list, target, comp);
 
         int mid;
 		
@@ -123,8 +116,6 @@ public class BinarySearchLibrary {
 		{
        
 			mid = (high + low)/2;
-	        //System.out.print("low: " + low + " high: " + high + " mid: " + mid);
-			
 			int c = comp.compare(list.get(mid), target); 
 			
 			if(c > 0) {
@@ -148,8 +139,6 @@ public class BinarySearchLibrary {
 			 else
 		        	if ((high - low) == 1)
 		        		return -1;
-			
-			 //System.out.println(" new low: " + low + " new high: " + high);
 						
 		}
 		

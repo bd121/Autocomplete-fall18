@@ -6,38 +6,39 @@ bd121
 results here this for #matches = 20
 
 search	size	#match	binary	brute
-	456976		20	0,0147	0,0135
-a	17576		20	0,0185	0,0190
-b	17576		20	0,0098	0,0050
-c	17576		20	0,0055	0,0045
-x	17576		20	0,0053	0,0046
-y	17576		20	0,0048	0,0046
-z	17576		20	0,0047	0,0064
-aa	676			20	0,0050	0,0045
-az	676			20	0,0046	0,0046
-za	676			20	0,0046	0,0045
-zz	676			20	0,0046	0,0045
+		456976	20	0,3006	0,0141
+a		17576	20	0,0065	0,0117
+b		17576	20	0,0085	0,0069
+c		17576	20	0,0099	0,0065
+x		17576	20	0,0057	0,0050
+y		17576	20	0,0057	0,0135
+z		17576	20	0,0076	0,0069
+aa		676		20	0,0002	0,0096
+az		676		20	0,0006	0,0097
+za		676		20	0,0006	0,0177
+zz		676		20	0,0005	0,0062
 
 (2) Run the program again for #matches = 10000, paste the results, 
 and then make any conclusions about how the # matches 
 effects the runtime. 
 
 search	size	#match	binary	brute
-	456976	10000	0,0309	0,0349
-a	17576	10000	0,0170	0,0183
-b	17576	10000	0,0161	0,0109
-c	17576	10000	0,0112	0,0115
-x	17576	10000	0,0139	0,0129
-y	17576	10000	0,0142	0,0106
-z	17576	10000	0,0114	0,0107
-aa	676		10000	0,0051	0,0049
-az	676		10000	0,0056	0,0053
-za	676		10000	0,0092	0,0060
-zz	676		10000	0,0059	0,0056
+		456976	10000	0,2598	0,0578
+a		17576	10000	0,0102	0,0112
+b		17576	10000	0,0067	0,0107
+c		17576	10000	0,0058	0,0105
+x		17576	10000	0,0065	0,0107
+y		17576	10000	0,0054	0,0104
+z		17576	10000	0,0079	0,0159
+aa		676		10000	0,0002	0,0061
+az		676		10000	0,0002	0,0050
+za		676		10000	0,0002	0,0050
+zz		676		10000	0,0003	0,0050
 
-The number of matches matters more when the size N is larger such as when N = 456976. The runtime for #matches=20
-is significantly less than for #matches=10000, and this may be because there is so many more Terms to look through.
-When size N is small, the #matches makes very little difference.
+The number of matches makes no difference (negligible) in runtime for the binary and brute implementations. Depending on 
+the search query, the runtime for #matches=20 is greater than or less than that for #matches=10000. This makes sense when
+considering the big O runtime complexities for binary and brute; #matches is not the highest power factor in the big O
+complexities and thus has no significant impact on the overall runtime. 
 
 (3) Copy/paste the code from BruteAutocomplete.topMatches below. 
 Explain what the Big-Oh complexity of the entire loop: 
@@ -93,7 +94,6 @@ BinarySearchAutocomplete.topMatches code that you
 implemented is by copy/pasting the code below 
 and explaining your answer in terms of N, M, and k.
 
-@Override
 	public List<Term> topMatches(String prefix, int k) {
 
 		if(prefix == null )
@@ -102,26 +102,45 @@ and explaining your answer in terms of N, M, and k.
 		if (k < 0) {
 			throw new IllegalArgumentException("Illegal value of k:"+k);
 		}
+		//f is the index of First element that matches prefix
+		int f = firstIndexOf(myTerms, new Term(prefix, 0), new Term.PrefixOrder(prefix.length()));
 		
-		// maintain pq of size k
-		PriorityQueue<Term> pq = new PriorityQueue<Term>(10, new Term.WeightOrder());
-		for (Term t : myTerms) {
-			if (!t.getWord().startsWith(prefix))
-				continue;
-			if (pq.size() < k) {
-				pq.add(t);
-			} else if (pq.peek().getWeight() < t.getWeight()) {
-				pq.remove();
-				pq.add(t);
-			}
+		//l is the index of Last element that matches prefix
+		int l = lastIndexOf(myTerms, new Term(prefix, 0), new Term.PrefixOrder(prefix.length()));
+		
+		ArrayList<Term> myList = new ArrayList<Term>();
+		
+		if(f == 0 && l == myTerms.length - 1)
+			myList.addAll(Arrays.asList(myTerms));
+		else
+		if(f >=0 && l >=0) {
+			
+			for(int i = f; i <= l; i++)
+					myList.add(myTerms[i]);
 		}
-		int numResults = Math.min(k, pq.size());
-		LinkedList<Term> ret = new LinkedList<>();
-		for (int i = 0; i < numResults; i++) {
-			ret.addFirst(pq.remove());
+		
+		Collections.sort(myList, new Term.ReverseWeightOrder());
+		
+		if(k >= myList.size()) {
+			
+			return myList;
 		}
-		return ret;
-	}
-}
-
+		else {
+			
+			ArrayList<Term> ret = new ArrayList<>();
+			
+			for(int i = 0; i < k; i++)
+				ret.add(myList.get(i));
+			
+			return ret;
+		}
+	}	
+	
+	The big O for index searching with prefix is 2O(logN) or O(logN).
+	The big O complexity of converting array to list is O(M).
+	The big O for for sorting all M elements that match prefix is M*O(logM).
+	The big O for getting the top k that match is O(k) or O(1).
+	
+	Together, this is O(logN + M + MlogM + k) or O(logN + M + MlogM + 1).
+	
 

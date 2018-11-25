@@ -120,20 +120,6 @@ public class Term implements Comparable<Term> {
                 else
                 	lim = Math.min(len1, len2);
                 	
-                /*
-                if(len1 <myPrefixSize && len2 < myPrefixSize) {
-            		
-            		if(len1 > len2)
-              		  return len1 - len2;
-            		
-                	}
-                	else
-                	  if(len1 > len2)
-                		  return len1 - len2;
-                	  else
-                        lim = len1;
-                        */
-
                 char v1[] = v.getWord().toCharArray();
                 char v2[] = w.getWord().toCharArray();
 
