@@ -85,10 +85,10 @@ using Term.ReverseWeightOrder.
 
 A LinkedList is used instead of an ArrayList because adding to the front of a LinkedList is more efficient
 since all the elements do not need to shift one index as they do in an ArrayList. Term.WeightOrder is used
-instead of Term.ReverseWeightOrder so that the terms are arranged in order with the lightest at
-the front and heaviest at the back of the queue. This way, when the k terms are removed one by one from the queue and added
-one by one to the beginning of the LinkedList, the heaviest will be the last added and the first term in
-the LinkedList, as desired.
+instead of Term.ReverseWeightOrder so that the terms are arranged in order with the lightest at the front
+and heaviest at the back of the queue. This way, when the k terms are removed one by one from the queue 
+and added one by one to the beginning of the LinkedList, the heaviest will be the last added and the first
+term in the LinkedList, as desired.
 
 (5) Explain what the runtime of the 
 BinarySearchAutocomplete.topMatches code that you 
